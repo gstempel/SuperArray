@@ -78,21 +78,72 @@ public class SuperArray {
 
     // ~~~~~~~~~~~~~~ PHASE II ~~~~~~~~~~~~~~
     //adds an item after the last item
-    public void add( int newVal ) { }
+    public void add( int newVal ) {
+	int[] temp = new int[_size+1];
+
+	for( int i = 0; i < _size; i++ ) {
+	    temp[i] = _data[i];
+	}	
+
+	_data = temp;
+
+	set((_lastPos + 1), newVal);
+
+	_size ++;
+	_lastPos ++;
+    }
 
 
     //inserts an item at index
     //shifts existing elements to the right
-    public void add( int index, int newVal ) { }
+    public void add( int index, int newVal ) {
+	int[] temp = new int[_size +1];
+
+	for( int i = 0; i < index; i++) {
+	    temp[_data.length - _size + i] = _data[i];
+	}
+
+	temp[index] = newVal;
+
+	for( int i = index+1; i < temp.length; i++) {
+	    temp[_data.length - _size + i] = _data[i-1];
+	}
+
+	_data = temp;
+	_size ++;
+	_lastPos ++;
+    }
 
 
     //removes the item at index
     //shifts elements left to fill in newly-empted slot
-    public void remove( int index ) { }
+    public void remove( int index ) {
+	int[] temp = new int[_data.length - 1];
+	
+	for(int i = 0; i < index; i++){
+	    temp[i] =  _data[i];
+	}
+
+	for(int i = index; i < temp.length; i++){
+	    temp[i] = _data[i+1];
+	}
+
+	_data = temp;
+	_lastPos -= 1;
+	_size -= 1;
+    }
 
 
     //return number of meaningful items in _data
-    public int size() { }
+    public int size() { 
+	int counter = 0;
+	for(int i = 0; i < _data.length; i++){
+	    if (_data[i] != 0) {
+		counter ++;
+	    }
+	}
+	return counter;
+    }
 
 
     //main method for testing
@@ -120,7 +171,7 @@ public class SuperArray {
 	curtis.expand();
 	System.out.println(curtis);
 
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	SuperArray mayfield = new SuperArray();
 	System.out.println("Printing empty SuperArray mayfield...");
 	System.out.println(mayfield);
@@ -150,7 +201,7 @@ public class SuperArray {
 	  mayfield.add(1,77);
 	  System.out.println("Printing SuperArray mayfield post-insert...");
 	  System.out.println(mayfield);
-	  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	//*****INSERT ANY ADDITIONAL TEST CALLS HERE*****
 
     }//end main
